@@ -1,17 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Arrived from './components/Arrived';
+import AsideMenu from './components/AsideMenu';
+import Browse from './components/Browse';
+import Clients from './components/Clients';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import Hero from './components/Hero';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-      </header>
-    </div>
+    <>
+      <Header />
+      <Hero />
+      <Browse />
+      <Arrived />
+      <Clients />
+      <AsideMenu />
+      <Footer />
+    </>
   );
 }
 
