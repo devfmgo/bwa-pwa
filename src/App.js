@@ -17,10 +17,11 @@ function App() {
           headers: {
             'Content-Type': 'application/json',
             accept: 'application/json',
-            // 'x-api-key': process.env.REACT_APP_APIKEY,
+            'X-API-KEY': process.env.REACT_APP_APIKEY,
           },
         }
       );
+      console.log(process.env.REACT_APP_APIKEY);
       const { nodes } = await res.json();
       setItems(nodes);
     })();
