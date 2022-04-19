@@ -91,7 +91,7 @@ ul.breadcrumb li:last-child a {
 }
 
 .slider .thumbnail .item {
-  @apply rounded bg-gray-100 relative rounded-lg mb-4 cursor-pointer;
+  @apply  bg-gray-100 relative rounded-lg mb-4 cursor-pointer;
   width: 106px;
   height: 106px;
 }

@@ -16,12 +16,13 @@ function App() {
         {
           headers: {
             'Content-Type': 'application/json',
-            accept: 'aplication/json',
-            'x-api-key': process.env.REACT_APP_APIKEY,
+            accept: 'application/json',
+            // 'x-api-key': process.env.REACT_APP_APIKEY,
           },
         }
       );
       const { nodes } = await res.json();
+      setItems(nodes);
     })();
   }, []);
   return (
@@ -29,7 +30,7 @@ function App() {
       <Header />
       <Hero />
       <Browse />
-      <Arrived />
+      <Arrived items={items} />
       <Clients />
       <AsideMenu />
       <Footer />
