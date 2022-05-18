@@ -9,7 +9,6 @@ function Splash() {
               src={logo}
               alt="LuxSpace | Fullfill your house with beautiful furniture"
               className="mx-auto mb-8"
-              srcset=""
             />
             <p className="mb-16 px-4">
               Kami menyediakan furniture berkelas yang membuat ruangan terasa

@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link } from 'react-router-dom';
 function Header() {
   return (
     <header className="absolute w-full z-50 px-4">
@@ -42,12 +42,12 @@ function Header() {
                 </a>
               </li>
               <li className="mx-3 py-6 md:py-0">
-                <a
-                  href="/"
+                <Link
+                  to="/profile"
                   className="text-black md:text-white hover:underline"
                 >
-                  Rewards
-                </a>
+                  Profile
+                </Link>
               </li>
             </ul>
           </div>
