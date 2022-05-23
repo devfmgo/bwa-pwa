@@ -38,7 +38,7 @@ function Profile() {
               <Link to="/">
                 <img
                   src="images/content/logo.png"
-                  alt="Luxspace | Fulfill your house with beautiful furniture"
+                  alt="Luxspace | Fulfill your house with beautiful furnitures"
                 />
               </Link>
             </div>
