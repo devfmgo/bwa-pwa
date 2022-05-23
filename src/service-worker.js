@@ -11,7 +11,7 @@ import { clientsClaim } from 'workbox-core';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { StaleWhileRevalidate } from 'workbox-strategies';
+import { NetworkFirst, StaleWhileRevalidate } from 'workbox-strategies';
 
 clientsClaim();
 
@@ -50,7 +50,9 @@ registerRoute(
 // precache, in this case same-origin .png requests like those from in public/
 registerRoute(
   // Add in any other file extensions or routing criteria as needed.
-  ({ url }) => url.origin === self.location.origin && url.pathname.endsWith('.png'), // Customize this strategy as needed, e.g., by changing to CacheFirst.
+  ({ url }) =>
+    url.origin === self.location.origin &&
+    /\.(jpe?g|png|svg|ico)$/i.test(url.pathname), // Customize this strategy as needed, e.g., by changing to CacheFirst.
   new StaleWhileRevalidate({
     cacheName: 'images',
     plugins: [
@@ -61,6 +63,51 @@ registerRoute(
   })
 );
 
+self.addEventListener('install', function (e) {
+  console.log('SW Install');
+});
+self.addEventListener('activate', function (e) {
+  console.log('SW Activate');
+});
+
+// Register route cache dns
+registerRoute(
+  ({ url }) =>
+    url.origin === ' https://fonts.googleapis.com' ||
+    url.origin === 'https://fonts.gstatic.com',
+  new NetworkFirst({
+    cacheName: 'fonts',
+    plugins: [
+      new ExpirationPlugin({
+        maxAgeSeconds: 60 * 60 * 24 * 356,
+        maxEntries: 30,
+      }),
+    ],
+  })
+);
+
+// Register API
+registerRoute(
+  ({ url }) => url.origin.includes('qorebase.io'),
+  new NetworkFirst({
+    cacheName: 'api-data',
+    plugins: [
+      new ExpirationPlugin({
+        maxAgeSeconds: 360,
+        maxEntries: 30,
+      }),
+    ],
+  })
+);
+
+//Register image api
+registerRoute(
+  ({ url }) => /\.(jpe?g|png)$/i.test(url.pathname),
+  new StaleWhileRevalidate({
+    cacheName: 'api-image',
+    plugins: [new ExpirationPlugin({ maxEntries: 30 })],
+  })
+);
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
 self.addEventListener('message', (event) => {
@@ -69,4 +116,12 @@ self.addEventListener('message', (event) => {
   }
 });
 
+self.addEventListener('push', function (e) {
+  e.waitUntil(
+    self.registration.showNotification('LuxSpace', {
+      icon: './icon-120.png',
+      body: e.data.text(),
+    })
+  );
+});
 // Any other custom service worker logic can go here.
